@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pregunta 9 — Catecismo Mayor Bautista Confesional</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&display=swap');
+
+:root{
+  --navy:#0E1A2B;
+  --navy-soft:#16273D;
+  --gold:#C49A43;
+  --gold-soft:#DDBE7C;
+  --bone:#F2F0E6;
+  --bone-dim:#E4E0D0;
+  --verde:#3F6B4E;
+  --verde-bg:#E4EDE4;
+  --ambar:#9A6B22;
+  --ambar-bg:#F3E7CE;
+  --display: 'Cormorant Garamond', serif;
+  --body: 'EB Garamond', serif;
+  --ui: 'Jost', sans-serif;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  background: var(--bone);
+  color: var(--navy);
+  font-family: var(--body);
+  line-height:1.65;
+  padding-bottom: 4rem;
+}
+
+.wrap{ max-width: 760px; margin: 0 auto; padding: 0 1.4rem; }
+
+/* ---------- PORTADA ---------- */
+header.portada{
+  background: var(--navy);
+  color: var(--bone);
+  padding: 2.6rem 1.4rem 2.2rem;
+  text-align:center;
+  border-bottom: 4px solid var(--gold);
+}
+.crest{ width:56px; height:56px; margin: 0 auto 0.9rem; display:block; }
+.crest path, .crest line{ stroke: var(--gold); }
+.eyebrow{
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 0.5rem;
+}
+h1.titulo{
+  font-family: var(--display);
+  font-weight:600;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  line-height:1.25;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.iglesia-tag{
+  font-family: var(--ui);
+  font-size: 0.7rem;
+  letter-spacing:0.08em;
+  color: var(--bone-dim);
+  margin-top: 1rem;
+  opacity:0.75;
+}
+
+/* ---------- NAV DE MOVIMIENTOS ---------- */
+nav.movs{
+  display:flex;
+  background: var(--navy-soft);
+  position: sticky; top:0; z-index:20;
+}
+nav.movs button{
+  flex:1;
+  font-family: var(--ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.85rem 0.5rem;
+  background:transparent;
+  color: var(--bone-dim);
+  border:none;
+  border-bottom: 3px solid transparent;
+  cursor:pointer;
+}
+nav.movs button.activo{
+  color: var(--bone);
+  border-bottom-color: var(--gold);
+}
+
+section.panel{ display:none; padding-top: 1.8rem; }
+section.panel.activo{ display:block; }
+
+/* ---------- PREGUNTA / RESPUESTA ---------- */
+.card-pr{
+  background: white;
+  border: 1px solid var(--bone-dim);
+  border-radius: 4px;
+  padding: 1.4rem 1.3rem;
+  margin: 1.3rem 0 1.6rem;
+}
+.card-pr .num{
+  font-family: var(--ui);
+  font-size:0.68rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color: var(--gold);
+  margin-bottom:0.4rem;
+}
+.card-pr .pregunta{
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight:600;
+  margin-bottom: 0.9rem;
+}
+.btn-reveal{
+  font-family: var(--ui);
+  font-size:0.75rem;
+  letter-spacing:0.05em;
+  background: var(--navy);
+  color: var(--bone);
+  border:none;
+  padding: 0.55rem 1rem;
+  border-radius: 3px;
+  cursor:pointer;
+}
+.respuesta{
+  display:none;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bone-dim);
+  font-size: 1.02rem;
+}
+.respuesta.mostrar{ display:block; }
+.texto-prueba{
+  font-family: var(--ui);
+  font-size: 0.78rem;
+  color: var(--navy-soft);
+  margin-top:0.8rem;
+  opacity:0.75;
+}
+
+/* ---------- BLOQUE DE TEXTO BÍBLICO ---------- */
+h2.subtitulo{
+  font-family: var(--display);
+  font-weight:600;
+  font-size: 1.15rem;
+  margin: 1.6rem 0 0.7rem;
+  color: var(--navy);
+}
+.texto-block{
+  background:white;
+  border-left: 4px solid var(--verde);
+  border-radius: 0 4px 4px 0;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.1rem;
+}
+.texto-block.amarillo{ border-left-color: var(--ambar); }
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:0.35rem;
+  font-family: var(--ui);
+  font-size: 0.68rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  padding: 0.22rem 0.55rem;
+  border-radius: 20px;
+  margin-bottom: 0.55rem;
+}
+.chip.verde{ background: var(--verde-bg); color: var(--verde); }
+.chip.amarillo{ background: var(--ambar-bg); color: var(--ambar); }
+.chip::before{ content:"●"; font-size:0.6rem; }
+
+.ref{ font-family: var(--ui); font-weight:600; font-size:0.95rem; margin-bottom:0.35rem; }
+.cita{ font-style:italic; color: var(--navy-soft); }
+.nota-calificador{
+  font-family: var(--ui);
+  font-size: 0.78rem;
+  background: var(--ambar-bg);
+  color: var(--ambar);
+  padding: 0.55rem 0.7rem;
+  border-radius: 3px;
+  margin-top:0.6rem;
+}
+
+/* ---------- VOCABULARIO GRIEGO ---------- */
+.griego-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap: 0.6rem;
+  margin: 1rem 0 1.6rem;
+}
+.griego-card{
+  background: var(--navy);
+  color: var(--bone);
+  border-radius: 4px;
+  padding: 0.85rem 0.8rem;
+  cursor:pointer;
+  min-height: 76px;
+  position:relative;
+  overflow:hidden;
+}
+.griego-card .palabra{
+  font-family: var(--display);
+  font-style:italic;
+  font-size: 1.05rem;
+  color: var(--gold-soft);
+}
+.griego-card .significado{
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  line-height:1.4;
+  margin-top:0.35rem;
+  max-height:0;
+  opacity:0;
+  transition: all 0.25s ease;
+}
+.griego-card.abierta .significado{ max-height:100px; opacity:1; margin-top:0.5rem;}
+.griego-card .toque{
+  font-family: var(--ui);
+  font-size: 0.6rem;
+  opacity:0.5;
+  position:absolute;
+  bottom:0.5rem;
+  right:0.7rem;
+}
+
+/* ---------- REPETICIÓN CORAL ---------- */
+.coral-box{
+  background: var(--navy);
+  color: var(--bone);
+  border-radius: 4px;
+  padding: 1.2rem 1.2rem;
+  margin: 1.3rem 0;
+}
+.coral-box .pregunta-coral{
+  font-family: var(--ui);
+  font-size: 0.95rem;
+  margin-bottom: 0.7rem;
+}
+.blank{
+  display:inline-block;
+  min-width: 90px;
+  border-bottom: 2px dotted var(--gold-soft);
+  cursor:pointer;
+  text-align:center;
+  color: transparent;
+}
+.blank.mostrado{
+  color: var(--gold-soft);
+  font-weight:600;
+  border-bottom-style: solid;
+}
+.instr{
+  font-family: var(--ui);
+  font-size:0.66rem;
+  opacity:0.6;
+  margin-top: 0.5rem;
+}
+
+/* ---------- RAYOS X ---------- */
+.rayosx-card{
+  background: var(--bone-dim);
+  border-radius: 4px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 0.9rem;
+}
+.rayosx-card .etiqueta{
+  font-family: var(--ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ambar);
+  margin-bottom: 0.4rem;
+}
+.rayosx-card .pregunta-rx{
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+/* ---------- MODO MAESTRO ---------- */
+.toggle-maestro{
+  display:flex; align-items:center; justify-content:center; gap:0.6rem;
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color: var(--navy-soft);
+  background: transparent;
+  border: 1px solid var(--navy-soft);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  margin: 2rem auto 1rem;
+  cursor:pointer;
+  width: fit-content;
+}
+.panel-maestro{
+  display:none;
+  background: var(--navy);
+  color: var(--bone);
+  border-radius: 4px;
+  padding: 1.2rem 1.3rem;
+  margin-top: 0.8rem;
+  border: 1px dashed var(--gold);
+}
+.panel-maestro.mostrar{ display:block; }
+.panel-maestro .titulo-m{
+  font-family: var(--ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.panel-maestro p{ font-size:0.92rem; margin-bottom:0.7rem; }
+.panel-maestro p:last-child{ margin-bottom:0; }
+
+footer{
+  text-align:center;
+  font-family: var(--ui);
+  font-size: 0.65rem;
+  color: var(--navy-soft);
+  opacity:0.5;
+  margin-top: 2.5rem;
+}
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <svg class="crest" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" stroke-width="1.5"/>
+    <line x1="50" y1="20" x2="50" y2="55" stroke-width="2"/>
+    <line x1="36" y1="30" x2="64" y2="30" stroke-width="2"/>
+    <line x1="28" y1="55" x2="28" y2="78" stroke-width="1.5"/>
+    <line x1="20" y1="62" x2="36" y2="62" stroke-width="1.5"/>
+    <line x1="72" y1="55" x2="72" y2="78" stroke-width="1.5"/>
+    <line x1="64" y1="62" x2="80" y2="62" stroke-width="1.5"/>
+  </svg>
+  <div class="eyebrow">Catecismo Mayor Bautista Confesional</div>
+  <h1 class="titulo">Pregunta 9<br>Las lenguas originales y su transmisión a los pueblos</h1>
+  <div class="iglesia-tag">Primera Iglesia Bautista de Los Tuxtlas · San Andrés Tuxtla, Ver.</div>
+</header>
+
+<nav class="movs">
+  <button class="tab activo" data-target="p-inicio">Pregunta</button>
+  <button class="tab" data-target="p-a">Movimiento A</button>
+  <button class="tab" data-target="p-b">Movimiento B</button>
+  <button class="tab" data-target="p-app">Aplicación</button>
+</nav>
+
+<div class="wrap">
+
+  <!-- ===================== PANEL: PREGUNTA COMPLETA ===================== -->
+  <section id="p-inicio" class="panel activo">
+    <div class="card-pr">
+      <div class="num">Pregunta 9</div>
+      <div class="pregunta">¿En qué idiomas fueron originalmente escritas las Sagradas Escrituras, y cómo deben ser transmitidas a los pueblos?</div>
+      <button class="btn-reveal" onclick="this.nextElementSibling.classList.toggle('mostrar')">Ver la respuesta</button>
+      <div class="respuesta">
+        Las Sagradas Escrituras fueron originalmente escritas en hebreo, siendo esta la lengua nativa del pueblo de Dios bajo el Antiguo Pacto, en lo que respecta al Antiguo Testamento; y en griego, siendo esta la lengua más generalmente conocida entre las naciones en el tiempo del Nuevo Testamento. Siendo estos textos originales de inmediata inspiración divina, han sido conservados puros en todos los siglos por la singular providencia y cuidado de Dios, y son por ello auténticos. Sin embargo, dado que no todo el pueblo de Dios tiene acceso a estas lenguas originales, siendo que todos los creyentes tienen derecho e interés en las Sagradas Escrituras, las mismas deben ser traducidas fielmente a la lengua vulgar de cada nación a la que lleguen, a fin de que la Palabra de Dios more abundantemente en todos y el pueblo pueda adorar a Dios de manera aceptable y tener esperanza por la paciencia y consolación de las Escrituras.
+        <div class="texto-prueba">Romanos 3:2 · Isaías 8:20 · 1 Corintios 14:6,9,11–12,24,27–28 · Colosenses 3:16 · Romanos 15:4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL: MOVIMIENTO A ===================== -->
+  <section id="p-a" class="panel">
+    <h2 class="subtitulo">¿En qué idiomas fueron escritas las Escrituras, y cómo llegaron puras hasta nosotros?</h2>
+
+    <div class="texto-block">
+      <span class="chip verde">Apoyo directo</span>
+      <div class="ref">1 Corintios 14:6, 9, 11–12, 24, 27–28</div>
+      <div class="cita">Pablo exige que todo lo dicho en la iglesia sea claro y entendible — de nada sirve hablar si nadie comprende el mensaje.</div>
+    </div>
+
+    <div class="texto-block amarillo">
+      <span class="chip amarillo">Apoyo por inferencia</span>
+      <div class="ref">Romanos 3:2</div>
+      <div class="cita">"A ellos [Israel] fueron confiados los oráculos de Dios."</div>
+      <div class="nota-calificador">Este texto no dice literalmente "el Antiguo Testamento se escribió en hebreo". Muestra que Dios confió su revelación a Israel — de ahí conectamos con que el hebreo era la lengua de ese pueblo. Es una conexión razonable, no una cita textual directa.</div>
+    </div>
+
+    <h2 class="subtitulo">Vocabulario del texto original</h2>
+    <div class="griego-grid">
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">glóssa</div>
+        <div class="significado">"Lengua" — de donde viene "glosario", "políglota".</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">eúsemos</div>
+        <div class="significado">"Bien marcada, fácil de distinguir" — como una señal clara.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">bárbaros</div>
+        <div class="significado">Imita el sonido de habla ininteligible: "bar-bar-bar". Puro ruido sin sentido.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">idiótes</div>
+        <div class="significado">"El de afuera", el que no entiende — de ahí "indocto" en Reina-Valera.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">lógia</div>
+        <div class="significado">"Oráculos" — dichos exactos de Dios, no un mensaje genérico.</div>
+        <div class="toque">toca</div>
+      </div>
+    </div>
+
+    <div class="coral-box">
+      <div class="pregunta-coral">¿En qué idioma fue escrito el Antiguo Testamento?</div>
+      <span class="blank" onclick="this.classList.toggle('mostrado'); this.textContent = this.classList.contains('mostrado') ? 'Hebreo' : '';"></span>
+      <div class="pregunta-coral" style="margin-top:0.9rem;">¿En qué idioma fue escrito el Nuevo Testamento?</div>
+      <span class="blank" onclick="this.classList.toggle('mostrado'); this.textContent = this.classList.contains('mostrado') ? 'Griego' : '';"></span>
+      <div class="instr">Toca la línea para revelar la respuesta.</div>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL: MOVIMIENTO B ===================== -->
+  <section id="p-b" class="panel">
+    <h2 class="subtitulo">¿Por qué y cómo deben transmitirse a los pueblos?</h2>
+
+    <div class="texto-block">
+      <span class="chip verde">Apoyo directo</span>
+      <div class="ref">Colosenses 3:16</div>
+      <div class="cita">"La palabra de Cristo more en abundancia en vosotros."</div>
+    </div>
+
+    <div class="texto-block">
+      <span class="chip verde">Apoyo directo</span>
+      <div class="ref">Romanos 15:4</div>
+      <div class="cita">"Para que tuviésemos esperanza" por la paciencia y consolación de las Escrituras.</div>
+    </div>
+
+    <h2 class="subtitulo">Vocabulario del texto original</h2>
+    <div class="griego-grid">
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">lógos</div>
+        <div class="significado">"Palabra" — el mensaje completo y coherente de Cristo.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">enoikeítō</div>
+        <div class="significado">"Que haga casa adentro" — que se instale a vivir, no de visita.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">plousíōs</div>
+        <div class="significado">"Ricamente, en abundancia" — misma raíz que "riqueza".</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">hypomonê</div>
+        <div class="significado">"Permanecer debajo" — resistencia activa bajo presión.</div>
+        <div class="toque">toca</div>
+      </div>
+      <div class="griego-card" onclick="this.classList.toggle('abierta')">
+        <div class="palabra">paráklēsis</div>
+        <div class="significado">"Llamado al lado tuyo" — consuelo de cerca, como acompañante.</div>
+        <div class="toque">toca</div>
+      </div>
+    </div>
+
+    <div class="coral-box">
+      <div class="pregunta-coral">¿Por qué deben traducirse las Escrituras a cada lengua?</div>
+      <span class="blank" style="min-width:260px;" onclick="this.classList.toggle('mostrado'); this.textContent = this.classList.contains('mostrado') ? 'Para que todos tengan acceso y la Palabra more en abundancia en el pueblo' : '';"></span>
+      <div class="instr">Toca la línea para revelar la respuesta.</div>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL: APLICACIÓN ===================== -->
+  <section id="p-app" class="panel">
+    <h2 class="subtitulo">Preguntas de Rayos X</h2>
+
+    <div class="rayosx-card">
+      <div class="etiqueta">Entrada</div>
+      <div class="pregunta-rx">¿Cuándo fue la última vez que leíste la Biblia sabiendo que estabas leyendo algo que te llegó después de siglos de cuidado providencial, y no solo "un libro más"?</div>
+    </div>
+
+    <div class="rayosx-card">
+      <div class="etiqueta">Costo</div>
+      <div class="pregunta-rx">Si Dios se tomó tanto trabajo para que la Palabra llegara a tu idioma, ¿qué dice de mí que la tengo en las manos y no la leo esta semana?</div>
+    </div>
+
+    <h2 class="subtitulo">Repetición final</h2>
+    <div class="coral-box">
+      <div class="pregunta-coral">Pregunta 9. ¿En qué idiomas fueron originalmente escritas las Sagradas Escrituras, y cómo deben ser transmitidas a los pueblos?</div>
+      <span class="blank" style="min-width:100%; display:block; margin-top:0.6rem; text-align:left; white-space:normal; line-height:1.6;"
+        onclick="this.classList.toggle('mostrado'); this.textContent = this.classList.contains('mostrado') ? 'Las Sagradas Escrituras fueron originalmente escritas en hebreo, siendo esta la lengua nativa del pueblo de Dios bajo el Antiguo Pacto; y en griego, la lengua más generalmente conocida entre las naciones. Han sido conservadas puras por la singular providencia de Dios. Deben traducirse fielmente a la lengua de cada nación, para que la Palabra more abundantemente en todos.' : '';">
+      </span>
+      <div class="instr">Toca para revelar la respuesta completa.</div>
+    </div>
+  </section>
+
+  <button class="toggle-maestro" onclick="document.getElementById('panel-m').classList.toggle('mostrar')">Modo maestro ▾</button>
+  <div id="panel-m" class="panel-maestro">
+    <div class="titulo-m">Objeciones anticipadas</div>
+    <p><strong>"¿Cuál Biblia es la correcta, la Reina-Valera o las modernas?"</strong> — Esa es una pregunta legítima y hay debate serio y honesto entre eruditos fieles sobre las familias de manuscritos. Lo que la Confesión afirma aquí es más sencillo: que Dios cuidó providencialmente que su Palabra no se perdiera ni se corrompiera en su esencia, en ningún texto o traducción fiel que tengamos hoy. No es una clase sobre crítica textual — es una clase sobre que puedes confiar en la Biblia que tienes en tus manos.</p>
+    <p><strong>"¿Por qué hay tantas versiones distintas en español?"</strong> — Existen porque hay decisiones distintas de traducción: más literal palabra por palabra, o más orientada a que se lea con naturalidad. Eso no significa que unas sean "la Biblia de verdad" y otras no. Preferir una por su estilo es válido; desconfiar de las demás como si fueran corruptas, no lo es.</p>
+  </div>
+
+</div>
+
+<footer>Primera Iglesia Bautista de Los Tuxtlas · Catecismo Mayor Bautista Confesional</footer>
+
+<script>
+document.querySelectorAll('nav.movs .tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.movs .tab').forEach(b=>b.classList.remove('activo'));
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('activo'));
+    btn.classList.add('activo');
+    document.getElementById(btn.dataset.target).classList.add('activo');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+</script>
+
+</body>
+</html>
